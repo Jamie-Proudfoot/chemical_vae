@@ -6,7 +6,7 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
-![chemical VAE](https://github.com/Jamie-Proudfoot/chemical_vae/blob/main/aux_data/banner.png)
+![chemical VAE](aux_data/banner.png)
 =============
 
 This repository contains the framework and code for constructing a variational autoencoder (VAE) for use with molecular SMILES, as described in [doi:10.1021/acscentsci.7b00572](http://pubs.acs.org/doi/abs/10.1021/acscentsci.7b00572), with preprint at [https://arxiv.org/pdf/1610.02415.pdf](https://arxiv.org/pdf/1610.02415.pdf).
