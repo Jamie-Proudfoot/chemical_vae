@@ -1,6 +1,6 @@
-## Updated Setup Instructions
+## Updated Setup Instructions (recommended)
 ```
-conda create -n chemvae python=3.6
+conda create -n chemvae python=3.10
 conda activate chemvae
 pip install -r requirements.txt
 python setup.py install
