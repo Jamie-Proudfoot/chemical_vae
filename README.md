@@ -6,19 +6,7 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
-### Alternative: Docker Setup
-```
-pip install gdown
-
-# now restart the shell to run gdown to download cudnn7 libs
-gdown 146W6GFyEaaoLUC4EguL1VRJZSU2v9gLS
-
-docker build -t chemvae_image .
-
-docker run --gpus all -it chemvae_image 
-```
-
-![chemical VAE](https://github.com/aspuru-guzik-group/chemical_vae/blob/master/aux_data/banner.png?raw=true)
+![chemical VAE](https://github.com/Jamie-Proudfoot/chemical_vae/blob/main/aux_data/banner.png)
 =============
 
 This repository contains the framework and code for constructing a variational autoencoder (VAE) for use with molecular SMILES, as described in [doi:10.1021/acscentsci.7b00572](http://pubs.acs.org/doi/abs/10.1021/acscentsci.7b00572), with preprint at [https://arxiv.org/pdf/1610.02415.pdf](https://arxiv.org/pdf/1610.02415.pdf).
@@ -27,20 +15,12 @@ In short, molecular SMILES are encoded into a code vector representation, and ca
 
 In our example, we perform encoding/decoding with the ZINC dataset, and shape the latent space on prediction on logP, QED, and SAS properties.
 
-#### Upcoming updates:
-- [ ] Updated Docker environment
-- [ ] Improved tutorial
-
-## Questions, problems?
-Make a [github issue](https://github.com/aspuru-guzik-group/chemical_vae/issues/new) :smile:. Please be as clear and descriptive as possible.
-
 ## How to install
 ### Requirements: 
 An [Anaconda python environment](https://www.anaconda.com/download) is recommend.
 Check the environment.yml file, but primarily:
 - Python >= 3.5
-- Keras >= 2.0.0 && <= 2.0.7
-- Tensorflow == 1.1
+- Tensorflow == 2.15.0
 - RDKit
 - Numpy
 
@@ -54,14 +34,12 @@ conda env create -f environment.yml
 source activate chemvae
 python setup.py install
 ```
-### via pip
-Assuming you have all the requirements:
 
-`pip install git+https://github.com/aspuru-guzik-group/chemical_vae.git`
-
-## Example: ZINC dataset
+## Example 1: ZINC dataset
 
 This repository contains an example of how to run the autoencoder on the zinc dataset.
+
+Labelled with calculated log-P (`logP`; lipophilicity), quantitative estimate of druglikeness (`qed`) and synthetic accessibility score (`SAS`).  
 
 First, take a look at the zinc directory. Parameters are set in the following jsons
   - **exp.json**  - Sets parameters for location of data, global experimental parameters number of epochs to run, properties to predict etc. 
@@ -71,10 +49,28 @@ For a full description of all the parameters, see hyperparameters.py ; parameter
 Once you have set the parameters, run the autoencoder using the command from directory with exp.json: 
 
 `
-python -m chemvae.train_vae
+nohup python -um chemvae.train_vae > train_vae.out & 
 `
 
 _(Make sure you copy examples directories to not overwrite the trained weights (*.h5))_
+
+
+## Example 2: QM9 dataset
+
+A sample of the QM9 dataset of small molecules.  
+
+Labelled with QM9 HOMO energies (`homo`), LUMO energies (`lumo`) and electronic spatial extent (`r2`)
+
+Same process as before for ZINC, a slightly smaller dataset with fewer compounds (approx. 100k), lower MolWt and smaller SMILES vocabulary size.  
+
+## Example 3: ZINC Michael acceptors
+
+Similar to ZINC datastet (approx. 250k), containing Michael acceptor (MA) functional group. 
+
+Labelled with PM6-level Mulliken charges (`mulliken_O4`; MA carbonyl oxygen), % buried volumes (`pbv_C1`; MA beta-carbon), and overall LUMO energies (`lumo`).  
+
+Used to determine if VAEs can reproduce a persistent functional group.
+Also included are a range of different representations: RDKit Canonical SMILES, Fragmented R-group SMILES, Ordered SMILES
 
 ## Components
 train_vae.py : main script for training variational autoencoder
@@ -90,8 +86,8 @@ train_vae.py : main script for training variational autoencoder
   - Includes Weight_Annealer callback, which is used to update the weight of the KL loss component
 - **vae_utils.py** - utility functions for an autoencoder object, used post processing.
 
-## Authors:
-This software is written by Jennifer Wei, Benjamin Sanchez-Lengeling, Dennis Sheberla, Rafael Gomez-Bomberelli, and Alan Aspuru-Guzik (alan@aspuru.com). 
+## Original Authors:
+This software was originally written by Jennifer Wei, Benjamin Sanchez-Lengeling, Dennis Sheberla, Rafael Gomez-Bomberelli, and Alan Aspuru-Guzik (alan@aspuru.com). 
 It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by
  
  * [Rafa Gómez-Bombarelli](http://aspuru.chem.harvard.edu/rafa-gomez-bombarelli/),
@@ -105,9 +101,8 @@ It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by
  * [Ryan P. Adams](http://people.seas.harvard.edu/~rpa/'),
  * [Alán Aspuru-Guzik](http://aspuru.chem.harvard.edu/about-alan/)
 
+## Subsequent Authors:
 
-Feel free to reach out to us with any questions! 
+* [Sven Lüpke](https://github.com/sven-luepke) (developed a fork of the original repository and produced the template Jupyter notebooks for the resuts)
+* [Jamie Proudfoot](https://github.com/Jamie-Proudfoot) (updated the chemvae code to work in Tensorflow 2 allowing it to be used on more modern GPUs)
 
-## Funding acknowledgements
-
-"This work was supported by the Computational Chemical Sciences Program funded by the U.S.Department of Energy, Office of Science, Basic Energy Sciences, under Award #DE- FG02-17ER16362"
