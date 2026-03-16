@@ -14,7 +14,6 @@
   ],
   "test_idx_file": "test_idx.npy",
   "history_file": "history.csv",
-  "checkpoint_path": "./",
   "do_prop_pred": true,
   "TRAIN_MODEL": true,
   "ENC_DEC_TEST": false,
@@ -39,5 +38,6 @@
   "conv_dim_depth": 5,
   "conv_d_growth_factor": 0.5,
   "conv_dim_width": 6,
-  "conv_w_growth_factor": 0.85
+  "conv_w_growth_factor": 0.85,
+  "verbose_print": 2
 }

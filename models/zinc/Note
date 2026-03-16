@@ -1,0 +1,7 @@
+Note: Required settings
+
+train_vae.py
+tf.disable_v2_behavior() + tensorflow.compat.v1.keras.optimizers
+
+models.py
+GRU layers: reset_after=False

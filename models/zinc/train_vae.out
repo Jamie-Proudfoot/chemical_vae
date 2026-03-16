@@ -1,0 +1,253 @@
+Using hyper-parameters:
+name                      - zinc        
+MAX_LEN                   - 120         
+data_file                 - 250k_rndm_zinc_drugs_clean_3.csv
+char_file                 - zinc.json   
+encoder_weights_file      - zinc_encoder.h5
+decoder_weights_file      - zinc_decoder.h5
+test_idx_file             - test_idx.npy
+history_file              - history.csv 
+do_prop_pred              - False       
+TRAIN_MODEL               - True        
+ENC_DEC_TEST              - False       
+PADDING                   - right       
+RAND_SEED                 - 42          
+epochs                    - 70          
+vae_annealer_start        - 29          
+dropout_rate_mid          - 0.08283292970479479
+anneal_sigmod_slope       - 0.5106654305791392
+recurrent_dim             - 488         
+batch_size                - 126         
+lr                        - 0.00039192162392520126
+hidden_dim                - 196         
+tgru_dropout              - 0.19617749608323892
+hg_growth_factor          - 1.2281884874932403
+middle_layer              - 1           
+momentum                  - 0.9717090063868801
+verbose_print             - 2           
+rest of parameters are set as default
+All params: {'reload_model': False, 'prev_epochs': 0, 'batch_size': 126, 'epochs': 70, 'val_split': 0.1, 'loss': 'categorical_crossentropy', 'batchnorm_conv': True, 'conv_activation': 'tanh', 'conv_depth': 4, 'conv_dim_depth': 8, 'conv_dim_width': 8, 'conv_d_growth_factor': 1.15875438383, 'conv_w_growth_factor': 1.1758149644, 'gru_depth': 4, 'rnn_activation': 'tanh', 'recurrent_dim': 488, 'do_tgru': True, 'terminal_GRU_implementation': 0, 'tgru_dropout': 0.19617749608323892, 'temperature': 1.0, 'hg_growth_factor': 1.2281884874932403, 'hidden_dim': 196, 'middle_layer': 1, 'dropout_rate_mid': 0.08283292970479479, 'batchnorm_mid': True, 'activation': 'tanh', 'lr': 0.00039192162392520126, 'momentum': 0.9717090063868801, 'optim': 'adam', 'vae_annealer_start': 29, 'batchnorm_vae': False, 'vae_activation': 'tanh', 'xent_loss_weight': 1.0, 'kl_loss_weight': 1.0, 'anneal_sigmod_slope': 0.5106654305791392, 'freeze_logvar_layer': False, 'freeze_offset': 1, 'do_prop_pred': False, 'prop_pred_depth': 3, 'prop_hidden_dim': 36, 'prop_growth_factor': 0.8, 'prop_pred_activation': 'tanh', 'reg_prop_pred_loss': 'mse', 'logit_prop_pred_loss': 'binary_crossentropy', 'prop_pred_loss_weight': 0.5, 'prop_pred_dropout': 0.0, 'prop_batchnorm': True, 'verbose_print': 2, 'name': 'zinc', 'MAX_LEN': 120, 'data_file': '250k_rndm_zinc_drugs_clean_3.csv', 'char_file': 'zinc.json', 'encoder_weights_file': 'zinc_encoder.h5', 'decoder_weights_file': 'zinc_decoder.h5', 'test_idx_file': 'test_idx.npy', 'history_file': 'history.csv', 'TRAIN_MODEL': True, 'ENC_DEC_TEST': False, 'PADDING': 'right', 'RAND_SEED': 42}
+Training set size is 249455
+first smiles: " CC(C)(C)c1ccc2occ(CC(=O)Nc3ccccc3F)c2c1 "
+total chars: 35
+Vectorization...
+Total Data size 249455
+shape of input vector : {} (224406, 120, 35)
+Training set size is (224406, 120, 35), after filtering to max length of 120
+Train on 224406 samples, validate on 24948 samples
+Current vae annealer weight is 3.701720805095644e-07
+Epoch 1/70
+/home/jp2658/.conda/envs/chemvae_tf2/lib/python3.10/site-packages/keras/src/engine/training_v1.py:2335: UserWarning: `Model.state_updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  updates = self.state_updates
+224406/224406 - 546s - loss: 0.7849 - x_pred_loss: 0.7849 - z_mean_log_var_loss: 1.1066 - x_pred_categorical_accuracy: 0.7667 - x_pred_vae_anneal_metric: 3.7018e-07 - val_loss: 4.6947 - val_x_pred_loss: 4.6947 - val_z_mean_log_var_loss: 1.0146 - val_x_pred_categorical_accuracy: 0.7087 - val_x_pred_vae_anneal_metric: 3.7017e-07 - 546s/epoch - 2ms/sample
+Current vae annealer weight is 6.168544915222557e-07
+Epoch 2/70
+224406/224406 - 541s - loss: 0.4650 - x_pred_loss: 0.4650 - z_mean_log_var_loss: 0.9640 - x_pred_categorical_accuracy: 0.8557 - x_pred_vae_anneal_metric: 6.1685e-07 - val_loss: 3.7701 - val_x_pred_loss: 3.7701 - val_z_mean_log_var_loss: 0.7727 - val_x_pred_categorical_accuracy: 0.7661 - val_x_pred_vae_anneal_metric: 6.1686e-07 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 1.0279257166985964e-06
+Epoch 3/70
+224406/224406 - 544s - loss: 0.3249 - x_pred_loss: 0.3249 - z_mean_log_var_loss: 0.6763 - x_pred_categorical_accuracy: 0.8965 - x_pred_vae_anneal_metric: 1.0279e-06 - val_loss: 3.0016 - val_x_pred_loss: 3.0016 - val_z_mean_log_var_loss: 0.5321 - val_x_pred_categorical_accuracy: 0.8138 - val_x_pred_vae_anneal_metric: 1.0279e-06 - 544s/epoch - 2ms/sample
+Current vae annealer weight is 1.7129339319420572e-06
+Epoch 4/70
+224406/224406 - 543s - loss: 0.2543 - x_pred_loss: 0.2543 - z_mean_log_var_loss: 0.4909 - x_pred_categorical_accuracy: 0.9177 - x_pred_vae_anneal_metric: 1.7129e-06 - val_loss: 2.4438 - val_x_pred_loss: 2.4438 - val_z_mean_log_var_loss: 0.4103 - val_x_pred_categorical_accuracy: 0.8484 - val_x_pred_vae_anneal_metric: 1.7129e-06 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 2.854429330962736e-06
+Epoch 5/70
+224406/224406 - 541s - loss: 0.2015 - x_pred_loss: 0.2015 - z_mean_log_var_loss: 0.3853 - x_pred_categorical_accuracy: 0.9344 - x_pred_vae_anneal_metric: 2.8545e-06 - val_loss: 2.0059 - val_x_pred_loss: 2.0059 - val_z_mean_log_var_loss: 0.3163 - val_x_pred_categorical_accuracy: 0.8756 - val_x_pred_vae_anneal_metric: 2.8544e-06 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 4.756611131108824e-06
+Epoch 6/70
+224406/224406 - 543s - loss: 0.1694 - x_pred_loss: 0.1694 - z_mean_log_var_loss: 0.3227 - x_pred_categorical_accuracy: 0.9446 - x_pred_vae_anneal_metric: 4.7566e-06 - val_loss: 1.6673 - val_x_pred_loss: 1.6673 - val_z_mean_log_var_loss: 0.2750 - val_x_pred_categorical_accuracy: 0.8966 - val_x_pred_vae_anneal_metric: 4.7566e-06 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 7.926390233964058e-06
+Epoch 7/70
+224406/224406 - 542s - loss: 0.1403 - x_pred_loss: 0.1403 - z_mean_log_var_loss: 0.2690 - x_pred_categorical_accuracy: 0.9537 - x_pred_vae_anneal_metric: 7.9265e-06 - val_loss: 1.4272 - val_x_pred_loss: 1.4272 - val_z_mean_log_var_loss: 0.2244 - val_x_pred_categorical_accuracy: 0.9115 - val_x_pred_vae_anneal_metric: 7.9264e-06 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 1.3208464534236994e-05
+Epoch 8/70
+224406/224406 - 545s - loss: 0.1192 - x_pred_loss: 0.1191 - z_mean_log_var_loss: 0.2202 - x_pred_categorical_accuracy: 0.9605 - x_pred_vae_anneal_metric: 1.3208e-05 - val_loss: 1.2207 - val_x_pred_loss: 1.2207 - val_z_mean_log_var_loss: 0.1961 - val_x_pred_categorical_accuracy: 0.9243 - val_x_pred_vae_anneal_metric: 1.3208e-05 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 2.201038759146048e-05
+Epoch 9/70
+224406/224406 - 542s - loss: 0.1039 - x_pred_loss: 0.1039 - z_mean_log_var_loss: 0.1951 - x_pred_categorical_accuracy: 0.9655 - x_pred_vae_anneal_metric: 2.2010e-05 - val_loss: 0.9564 - val_x_pred_loss: 0.9564 - val_z_mean_log_var_loss: 0.1676 - val_x_pred_categorical_accuracy: 0.9407 - val_x_pred_vae_anneal_metric: 2.2010e-05 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 3.6677565290112376e-05
+Epoch 10/70
+224406/224406 - 544s - loss: 0.0888 - x_pred_loss: 0.0888 - z_mean_log_var_loss: 0.1669 - x_pred_categorical_accuracy: 0.9705 - x_pred_vae_anneal_metric: 3.6678e-05 - val_loss: 0.8239 - val_x_pred_loss: 0.8239 - val_z_mean_log_var_loss: 0.1433 - val_x_pred_categorical_accuracy: 0.9489 - val_x_pred_vae_anneal_metric: 3.6677e-05 - 544s/epoch - 2ms/sample
+Current vae annealer weight is 6.111798993344653e-05
+Epoch 11/70
+224406/224406 - 539s - loss: 0.0789 - x_pred_loss: 0.0789 - z_mean_log_var_loss: 0.1499 - x_pred_categorical_accuracy: 0.9738 - x_pred_vae_anneal_metric: 6.1117e-05 - val_loss: 0.8159 - val_x_pred_loss: 0.8159 - val_z_mean_log_var_loss: 0.1374 - val_x_pred_categorical_accuracy: 0.9494 - val_x_pred_vae_anneal_metric: 6.1118e-05 - 539s/epoch - 2ms/sample
+Current vae annealer weight is 0.0001018428520948195
+Epoch 12/70
+224406/224406 - 542s - loss: 0.0701 - x_pred_loss: 0.0701 - z_mean_log_var_loss: 0.1340 - x_pred_categorical_accuracy: 0.9768 - x_pred_vae_anneal_metric: 1.0184e-04 - val_loss: 0.6074 - val_x_pred_loss: 0.6074 - val_z_mean_log_var_loss: 0.1195 - val_x_pred_categorical_accuracy: 0.9623 - val_x_pred_vae_anneal_metric: 1.0184e-04 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.00016969938095202496
+Epoch 13/70
+224406/224406 - 542s - loss: 0.0619 - x_pred_loss: 0.0619 - z_mean_log_var_loss: 0.1225 - x_pred_categorical_accuracy: 0.9795 - x_pred_vae_anneal_metric: 1.6970e-04 - val_loss: 0.5907 - val_x_pred_loss: 0.5907 - val_z_mean_log_var_loss: 0.1090 - val_x_pred_categorical_accuracy: 0.9634 - val_x_pred_vae_anneal_metric: 1.6970e-04 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.00028275502131637844
+Epoch 14/70
+224406/224406 - 543s - loss: 0.0565 - x_pred_loss: 0.0564 - z_mean_log_var_loss: 0.1118 - x_pred_categorical_accuracy: 0.9814 - x_pred_vae_anneal_metric: 2.8276e-04 - val_loss: 0.5037 - val_x_pred_loss: 0.5037 - val_z_mean_log_var_loss: 0.1011 - val_x_pred_categorical_accuracy: 0.9688 - val_x_pred_vae_anneal_metric: 2.8275e-04 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.0004710941152704827
+Epoch 15/70
+224406/224406 - 543s - loss: 0.0507 - x_pred_loss: 0.0507 - z_mean_log_var_loss: 0.1012 - x_pred_categorical_accuracy: 0.9833 - x_pred_vae_anneal_metric: 4.7110e-04 - val_loss: 0.4371 - val_x_pred_loss: 0.4370 - val_z_mean_log_var_loss: 0.0908 - val_x_pred_categorical_accuracy: 0.9729 - val_x_pred_vae_anneal_metric: 4.7109e-04 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.0007847847191363334
+Epoch 16/70
+224406/224406 - 543s - loss: 0.0471 - x_pred_loss: 0.0470 - z_mean_log_var_loss: 0.0934 - x_pred_categorical_accuracy: 0.9845 - x_pred_vae_anneal_metric: 7.8479e-04 - val_loss: 0.3707 - val_x_pred_loss: 0.3707 - val_z_mean_log_var_loss: 0.0837 - val_x_pred_categorical_accuracy: 0.9770 - val_x_pred_vae_anneal_metric: 7.8478e-04 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.0013070814422209435
+Epoch 17/70
+224406/224406 - 546s - loss: 0.0433 - x_pred_loss: 0.0432 - z_mean_log_var_loss: 0.0852 - x_pred_categorical_accuracy: 0.9858 - x_pred_vae_anneal_metric: 0.0013 - val_loss: 0.3783 - val_x_pred_loss: 0.3782 - val_z_mean_log_var_loss: 0.0796 - val_x_pred_categorical_accuracy: 0.9765 - val_x_pred_vae_anneal_metric: 0.0013 - 546s/epoch - 2ms/sample
+Current vae annealer weight is 0.0021762245466587582
+Epoch 18/70
+224406/224406 - 542s - loss: 0.0402 - x_pred_loss: 0.0401 - z_mean_log_var_loss: 0.0778 - x_pred_categorical_accuracy: 0.9868 - x_pred_vae_anneal_metric: 0.0022 - val_loss: 0.3434 - val_x_pred_loss: 0.3432 - val_z_mean_log_var_loss: 0.0748 - val_x_pred_categorical_accuracy: 0.9787 - val_x_pred_vae_anneal_metric: 0.0022 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.0036212083259452047
+Epoch 19/70
+224406/224406 - 543s - loss: 0.0388 - x_pred_loss: 0.0385 - z_mean_log_var_loss: 0.0718 - x_pred_categorical_accuracy: 0.9874 - x_pred_vae_anneal_metric: 0.0036 - val_loss: 0.2784 - val_x_pred_loss: 0.2782 - val_z_mean_log_var_loss: 0.0667 - val_x_pred_categorical_accuracy: 0.9827 - val_x_pred_vae_anneal_metric: 0.0036 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.0060198535230323105
+Epoch 20/70
+224406/224406 - 542s - loss: 0.0346 - x_pred_loss: 0.0342 - z_mean_log_var_loss: 0.0650 - x_pred_categorical_accuracy: 0.9888 - x_pred_vae_anneal_metric: 0.0060 - val_loss: 0.3555 - val_x_pred_loss: 0.3551 - val_z_mean_log_var_loss: 0.0612 - val_x_pred_categorical_accuracy: 0.9780 - val_x_pred_vae_anneal_metric: 0.0060 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.009991400314210233
+Epoch 21/70
+224406/224406 - 541s - loss: 0.0336 - x_pred_loss: 0.0330 - z_mean_log_var_loss: 0.0573 - x_pred_categorical_accuracy: 0.9892 - x_pred_vae_anneal_metric: 0.0100 - val_loss: 0.2541 - val_x_pred_loss: 0.2536 - val_z_mean_log_var_loss: 0.0509 - val_x_pred_categorical_accuracy: 0.9843 - val_x_pred_vae_anneal_metric: 0.0100 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.016539541808615513
+Epoch 22/70
+224406/224406 - 541s - loss: 0.0317 - x_pred_loss: 0.0309 - z_mean_log_var_loss: 0.0497 - x_pred_categorical_accuracy: 0.9899 - x_pred_vae_anneal_metric: 0.0165 - val_loss: 0.2695 - val_x_pred_loss: 0.2688 - val_z_mean_log_var_loss: 0.0452 - val_x_pred_categorical_accuracy: 0.9833 - val_x_pred_vae_anneal_metric: 0.0165 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.02726101803792773
+Epoch 23/70
+224406/224406 - 543s - loss: 0.0315 - x_pred_loss: 0.0302 - z_mean_log_var_loss: 0.0456 - x_pred_categorical_accuracy: 0.9901 - x_pred_vae_anneal_metric: 0.0273 - val_loss: 0.2592 - val_x_pred_loss: 0.2580 - val_z_mean_log_var_loss: 0.0436 - val_x_pred_categorical_accuracy: 0.9840 - val_x_pred_vae_anneal_metric: 0.0273 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.04461720338803846
+Epoch 24/70
+224406/224406 - 541s - loss: 0.0337 - x_pred_loss: 0.0317 - z_mean_log_var_loss: 0.0448 - x_pred_categorical_accuracy: 0.9896 - x_pred_vae_anneal_metric: 0.0446 - val_loss: 0.2179 - val_x_pred_loss: 0.2160 - val_z_mean_log_var_loss: 0.0426 - val_x_pred_categorical_accuracy: 0.9866 - val_x_pred_vae_anneal_metric: 0.0446 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.07220328200576367
+Epoch 25/70
+224406/224406 - 545s - loss: 0.0323 - x_pred_loss: 0.0289 - z_mean_log_var_loss: 0.0463 - x_pred_categorical_accuracy: 0.9905 - x_pred_vae_anneal_metric: 0.0722 - val_loss: 0.1995 - val_x_pred_loss: 0.1964 - val_z_mean_log_var_loss: 0.0433 - val_x_pred_categorical_accuracy: 0.9878 - val_x_pred_vae_anneal_metric: 0.0722 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 0.11479597607205051
+Epoch 26/70
+224406/224406 - 545s - loss: 0.0358 - x_pred_loss: 0.0304 - z_mean_log_var_loss: 0.0470 - x_pred_categorical_accuracy: 0.9900 - x_pred_vae_anneal_metric: 0.1148 - val_loss: 0.2149 - val_x_pred_loss: 0.2101 - val_z_mean_log_var_loss: 0.0422 - val_x_pred_categorical_accuracy: 0.9870 - val_x_pred_vae_anneal_metric: 0.1148 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 0.17770179221364119
+Epoch 27/70
+224406/224406 - 541s - loss: 0.0390 - x_pred_loss: 0.0313 - z_mean_log_var_loss: 0.0436 - x_pred_categorical_accuracy: 0.9898 - x_pred_vae_anneal_metric: 0.1777 - val_loss: 0.2133 - val_x_pred_loss: 0.2070 - val_z_mean_log_var_loss: 0.0354 - val_x_pred_categorical_accuracy: 0.9872 - val_x_pred_vae_anneal_metric: 0.1777 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.26476824599321086
+Epoch 28/70
+224406/224406 - 543s - loss: 0.0408 - x_pred_loss: 0.0313 - z_mean_log_var_loss: 0.0359 - x_pred_categorical_accuracy: 0.9897 - x_pred_vae_anneal_metric: 0.2648 - val_loss: 0.2460 - val_x_pred_loss: 0.2387 - val_z_mean_log_var_loss: 0.0277 - val_x_pred_categorical_accuracy: 0.9852 - val_x_pred_vae_anneal_metric: 0.2648 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.3750375460299153
+Epoch 29/70
+224406/224406 - 542s - loss: 0.0410 - x_pred_loss: 0.0310 - z_mean_log_var_loss: 0.0268 - x_pred_categorical_accuracy: 0.9899 - x_pred_vae_anneal_metric: 0.3750 - val_loss: 0.2226 - val_x_pred_loss: 0.2147 - val_z_mean_log_var_loss: 0.0209 - val_x_pred_categorical_accuracy: 0.9867 - val_x_pred_vae_anneal_metric: 0.3750 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.5
+Epoch 30/70
+224406/224406 - 545s - loss: 0.0409 - x_pred_loss: 0.0310 - z_mean_log_var_loss: 0.0197 - x_pred_categorical_accuracy: 0.9899 - x_pred_vae_anneal_metric: 0.5000 - val_loss: 0.2326 - val_x_pred_loss: 0.2251 - val_z_mean_log_var_loss: 0.0149 - val_x_pred_categorical_accuracy: 0.9860 - val_x_pred_vae_anneal_metric: 0.5000 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 0.6249624539700847
+Epoch 31/70
+224406/224406 - 541s - loss: 0.0375 - x_pred_loss: 0.0284 - z_mean_log_var_loss: 0.0145 - x_pred_categorical_accuracy: 0.9907 - x_pred_vae_anneal_metric: 0.6250 - val_loss: 0.2778 - val_x_pred_loss: 0.2701 - val_z_mean_log_var_loss: 0.0123 - val_x_pred_categorical_accuracy: 0.9832 - val_x_pred_vae_anneal_metric: 0.6250 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.7352317540067891
+Epoch 32/70
+224406/224406 - 541s - loss: 0.0370 - x_pred_loss: 0.0283 - z_mean_log_var_loss: 0.0119 - x_pred_categorical_accuracy: 0.9908 - x_pred_vae_anneal_metric: 0.7352 - val_loss: 0.3292 - val_x_pred_loss: 0.3220 - val_z_mean_log_var_loss: 0.0099 - val_x_pred_categorical_accuracy: 0.9800 - val_x_pred_vae_anneal_metric: 0.7352 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.8222982077863588
+Epoch 33/70
+224406/224406 - 540s - loss: 0.0386 - x_pred_loss: 0.0303 - z_mean_log_var_loss: 0.0102 - x_pred_categorical_accuracy: 0.9903 - x_pred_vae_anneal_metric: 0.8223 - val_loss: 3.4915 - val_x_pred_loss: 3.4733 - val_z_mean_log_var_loss: 0.0221 - val_x_pred_categorical_accuracy: 0.7845 - val_x_pred_vae_anneal_metric: 0.8223 - 540s/epoch - 2ms/sample
+Current vae annealer weight is 0.8852040239279495
+Epoch 34/70
+224406/224406 - 544s - loss: 0.1675 - x_pred_loss: 0.1477 - z_mean_log_var_loss: 0.0224 - x_pred_categorical_accuracy: 0.9515 - x_pred_vae_anneal_metric: 0.8852 - val_loss: 0.7649 - val_x_pred_loss: 0.7428 - val_z_mean_log_var_loss: 0.0250 - val_x_pred_categorical_accuracy: 0.9539 - val_x_pred_vae_anneal_metric: 0.8852 - 544s/epoch - 2ms/sample
+Current vae annealer weight is 0.9277967179942364
+Epoch 35/70
+224406/224406 - 542s - loss: 0.1183 - x_pred_loss: 0.0932 - z_mean_log_var_loss: 0.0271 - x_pred_categorical_accuracy: 0.9692 - x_pred_vae_anneal_metric: 0.9278 - val_loss: 0.6042 - val_x_pred_loss: 0.5791 - val_z_mean_log_var_loss: 0.0270 - val_x_pred_categorical_accuracy: 0.9641 - val_x_pred_vae_anneal_metric: 0.9278 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9553827966119615
+Epoch 36/70
+224406/224406 - 541s - loss: 0.0793 - x_pred_loss: 0.0553 - z_mean_log_var_loss: 0.0252 - x_pred_categorical_accuracy: 0.9819 - x_pred_vae_anneal_metric: 0.9554 - val_loss: 0.4709 - val_x_pred_loss: 0.4501 - val_z_mean_log_var_loss: 0.0218 - val_x_pred_categorical_accuracy: 0.9721 - val_x_pred_vae_anneal_metric: 0.9554 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.9727389819620722
+Epoch 37/70
+224406/224406 - 543s - loss: 0.3120 - x_pred_loss: 0.2859 - z_mean_log_var_loss: 0.0268 - x_pred_categorical_accuracy: 0.9050 - x_pred_vae_anneal_metric: 0.9727 - val_loss: 4.5695 - val_x_pred_loss: 4.5411 - val_z_mean_log_var_loss: 0.0292 - val_x_pred_categorical_accuracy: 0.7183 - val_x_pred_vae_anneal_metric: 0.9727 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9834604581913845
+Epoch 38/70
+224406/224406 - 543s - loss: 0.3803 - x_pred_loss: 0.3501 - z_mean_log_var_loss: 0.0307 - x_pred_categorical_accuracy: 0.8821 - x_pred_vae_anneal_metric: 0.9835 - val_loss: 4.3650 - val_x_pred_loss: 4.3379 - val_z_mean_log_var_loss: 0.0276 - val_x_pred_categorical_accuracy: 0.7309 - val_x_pred_vae_anneal_metric: 0.9835 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9900085996857898
+Epoch 39/70
+224406/224406 - 545s - loss: 0.3466 - x_pred_loss: 0.3171 - z_mean_log_var_loss: 0.0297 - x_pred_categorical_accuracy: 0.8941 - x_pred_vae_anneal_metric: 0.9900 - val_loss: 3.1504 - val_x_pred_loss: 3.1217 - val_z_mean_log_var_loss: 0.0289 - val_x_pred_categorical_accuracy: 0.8063 - val_x_pred_vae_anneal_metric: 0.9900 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 0.9939801464769676
+Epoch 40/70
+224406/224406 - 543s - loss: 0.2515 - x_pred_loss: 0.2234 - z_mean_log_var_loss: 0.0283 - x_pred_categorical_accuracy: 0.9254 - x_pred_vae_anneal_metric: 0.9940 - val_loss: 2.1752 - val_x_pred_loss: 2.1488 - val_z_mean_log_var_loss: 0.0265 - val_x_pred_categorical_accuracy: 0.8667 - val_x_pred_vae_anneal_metric: 0.9940 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9963787916740549
+Epoch 41/70
+224406/224406 - 543s - loss: 0.1806 - x_pred_loss: 0.1536 - z_mean_log_var_loss: 0.0271 - x_pred_categorical_accuracy: 0.9487 - x_pred_vae_anneal_metric: 0.9964 - val_loss: 1.2785 - val_x_pred_loss: 1.2535 - val_z_mean_log_var_loss: 0.0250 - val_x_pred_categorical_accuracy: 0.9222 - val_x_pred_vae_anneal_metric: 0.9964 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9978237754533412
+Epoch 42/70
+224406/224406 - 542s - loss: 0.1218 - x_pred_loss: 0.0973 - z_mean_log_var_loss: 0.0246 - x_pred_categorical_accuracy: 0.9676 - x_pred_vae_anneal_metric: 0.9978 - val_loss: 0.8352 - val_x_pred_loss: 0.8131 - val_z_mean_log_var_loss: 0.0221 - val_x_pred_categorical_accuracy: 0.9496 - val_x_pred_vae_anneal_metric: 0.9978 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.998692918557779
+Epoch 43/70
+224406/224406 - 542s - loss: 0.0853 - x_pred_loss: 0.0649 - z_mean_log_var_loss: 0.0204 - x_pred_categorical_accuracy: 0.9785 - x_pred_vae_anneal_metric: 0.9987 - val_loss: 0.5715 - val_x_pred_loss: 0.5544 - val_z_mean_log_var_loss: 0.0171 - val_x_pred_categorical_accuracy: 0.9656 - val_x_pred_vae_anneal_metric: 0.9987 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9992152152808638
+Epoch 44/70
+224406/224406 - 542s - loss: 0.0618 - x_pred_loss: 0.0469 - z_mean_log_var_loss: 0.0149 - x_pred_categorical_accuracy: 0.9845 - x_pred_vae_anneal_metric: 0.9992 - val_loss: 0.7076 - val_x_pred_loss: 0.6959 - val_z_mean_log_var_loss: 0.0117 - val_x_pred_categorical_accuracy: 0.9568 - val_x_pred_vae_anneal_metric: 0.9992 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9995289058847296
+Epoch 45/70
+224406/224406 - 542s - loss: 0.0486 - x_pred_loss: 0.0381 - z_mean_log_var_loss: 0.0104 - x_pred_categorical_accuracy: 0.9874 - x_pred_vae_anneal_metric: 0.9995 - val_loss: 1.0155 - val_x_pred_loss: 1.0067 - val_z_mean_log_var_loss: 0.0087 - val_x_pred_categorical_accuracy: 0.9375 - val_x_pred_vae_anneal_metric: 0.9995 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9997172449786838
+Epoch 46/70
+224406/224406 - 543s - loss: 0.0416 - x_pred_loss: 0.0334 - z_mean_log_var_loss: 0.0083 - x_pred_categorical_accuracy: 0.9890 - x_pred_vae_anneal_metric: 0.9997 - val_loss: 0.9705 - val_x_pred_loss: 0.9631 - val_z_mean_log_var_loss: 0.0074 - val_x_pred_categorical_accuracy: 0.9402 - val_x_pred_vae_anneal_metric: 0.9997 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9998303006190481
+Epoch 47/70
+224406/224406 - 542s - loss: 0.0376 - x_pred_loss: 0.0302 - z_mean_log_var_loss: 0.0074 - x_pred_categorical_accuracy: 0.9901 - x_pred_vae_anneal_metric: 0.9998 - val_loss: 0.7557 - val_x_pred_loss: 0.7489 - val_z_mean_log_var_loss: 0.0068 - val_x_pred_categorical_accuracy: 0.9535 - val_x_pred_vae_anneal_metric: 0.9998 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9998981571479052
+Epoch 48/70
+224406/224406 - 542s - loss: 0.0350 - x_pred_loss: 0.0282 - z_mean_log_var_loss: 0.0068 - x_pred_categorical_accuracy: 0.9908 - x_pred_vae_anneal_metric: 0.9999 - val_loss: 0.7431 - val_x_pred_loss: 0.7366 - val_z_mean_log_var_loss: 0.0065 - val_x_pred_categorical_accuracy: 0.9543 - val_x_pred_vae_anneal_metric: 0.9999 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999388820100666
+Epoch 49/70
+224406/224406 - 543s - loss: 0.0327 - x_pred_loss: 0.0262 - z_mean_log_var_loss: 0.0065 - x_pred_categorical_accuracy: 0.9914 - x_pred_vae_anneal_metric: 0.9999 - val_loss: 0.8018 - val_x_pred_loss: 0.7954 - val_z_mean_log_var_loss: 0.0063 - val_x_pred_categorical_accuracy: 0.9506 - val_x_pred_vae_anneal_metric: 0.9999 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999633224347099
+Epoch 50/70
+224406/224406 - 544s - loss: 0.0314 - x_pred_loss: 0.0251 - z_mean_log_var_loss: 0.0064 - x_pred_categorical_accuracy: 0.9918 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.9072 - val_x_pred_loss: 0.9013 - val_z_mean_log_var_loss: 0.0059 - val_x_pred_categorical_accuracy: 0.9441 - val_x_pred_vae_anneal_metric: 1.0000 - 544s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999779896124086
+Epoch 51/70
+224406/224406 - 543s - loss: 0.0302 - x_pred_loss: 0.0240 - z_mean_log_var_loss: 0.0062 - x_pred_categorical_accuracy: 0.9921 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.8819 - val_x_pred_loss: 0.8760 - val_z_mean_log_var_loss: 0.0060 - val_x_pred_categorical_accuracy: 0.9457 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999867915354658
+Epoch 52/70
+224406/224406 - 542s - loss: 0.0290 - x_pred_loss: 0.0229 - z_mean_log_var_loss: 0.0061 - x_pred_categorical_accuracy: 0.9925 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.8202 - val_x_pred_loss: 0.8144 - val_z_mean_log_var_loss: 0.0058 - val_x_pred_categorical_accuracy: 0.9495 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.999992073609766
+Epoch 53/70
+224406/224406 - 544s - loss: 0.0285 - x_pred_loss: 0.0225 - z_mean_log_var_loss: 0.0060 - x_pred_categorical_accuracy: 0.9926 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 1.0945 - val_x_pred_loss: 1.0888 - val_z_mean_log_var_loss: 0.0057 - val_x_pred_categorical_accuracy: 0.9325 - val_x_pred_vae_anneal_metric: 1.0000 - 544s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999952433888688
+Epoch 54/70
+224406/224406 - 545s - loss: 0.0275 - x_pred_loss: 0.0216 - z_mean_log_var_loss: 0.0059 - x_pred_categorical_accuracy: 0.9929 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6753 - val_x_pred_loss: 0.6693 - val_z_mean_log_var_loss: 0.0060 - val_x_pred_categorical_accuracy: 0.9585 - val_x_pred_vae_anneal_metric: 1.0000 - 545s/epoch - 2ms/sample
+Current vae annealer weight is 0.999997145570669
+Epoch 55/70
+224406/224406 - 541s - loss: 0.0266 - x_pred_loss: 0.0208 - z_mean_log_var_loss: 0.0058 - x_pred_categorical_accuracy: 0.9932 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7697 - val_x_pred_loss: 0.7641 - val_z_mean_log_var_loss: 0.0056 - val_x_pred_categorical_accuracy: 0.9526 - val_x_pred_vae_anneal_metric: 1.0000 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.999998287066068
+Epoch 56/70
+224406/224406 - 541s - loss: 0.0260 - x_pred_loss: 0.0203 - z_mean_log_var_loss: 0.0057 - x_pred_categorical_accuracy: 0.9934 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.8336 - val_x_pred_loss: 0.8281 - val_z_mean_log_var_loss: 0.0055 - val_x_pred_categorical_accuracy: 0.9486 - val_x_pred_vae_anneal_metric: 1.0000 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999989720742833
+Epoch 57/70
+224406/224406 - 541s - loss: 0.0258 - x_pred_loss: 0.0201 - z_mean_log_var_loss: 0.0057 - x_pred_categorical_accuracy: 0.9935 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6337 - val_x_pred_loss: 0.6283 - val_z_mean_log_var_loss: 0.0054 - val_x_pred_categorical_accuracy: 0.9610 - val_x_pred_vae_anneal_metric: 1.0000 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999993831455084
+Epoch 58/70
+224406/224406 - 543s - loss: 0.0250 - x_pred_loss: 0.0194 - z_mean_log_var_loss: 0.0056 - x_pred_categorical_accuracy: 0.9936 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6509 - val_x_pred_loss: 0.6450 - val_z_mean_log_var_loss: 0.0058 - val_x_pred_categorical_accuracy: 0.9600 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999996298279195
+Epoch 59/70
+224406/224406 - 543s - loss: 0.0247 - x_pred_loss: 0.0191 - z_mean_log_var_loss: 0.0056 - x_pred_categorical_accuracy: 0.9937 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6140 - val_x_pred_loss: 0.6086 - val_z_mean_log_var_loss: 0.0054 - val_x_pred_categorical_accuracy: 0.9622 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999997778611365
+Epoch 60/70
+224406/224406 - 539s - loss: 0.0241 - x_pred_loss: 0.0186 - z_mean_log_var_loss: 0.0055 - x_pred_categorical_accuracy: 0.9939 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7520 - val_x_pred_loss: 0.7467 - val_z_mean_log_var_loss: 0.0053 - val_x_pred_categorical_accuracy: 0.9537 - val_x_pred_vae_anneal_metric: 1.0000 - 539s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999998666953174
+Epoch 61/70
+224406/224406 - 543s - loss: 0.0237 - x_pred_loss: 0.0182 - z_mean_log_var_loss: 0.0054 - x_pred_categorical_accuracy: 0.9940 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6251 - val_x_pred_loss: 0.6198 - val_z_mean_log_var_loss: 0.0054 - val_x_pred_categorical_accuracy: 0.9615 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999200043723
+Epoch 62/70
+224406/224406 - 543s - loss: 0.0235 - x_pred_loss: 0.0181 - z_mean_log_var_loss: 0.0054 - x_pred_categorical_accuracy: 0.9941 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.6488 - val_x_pred_loss: 0.6437 - val_z_mean_log_var_loss: 0.0051 - val_x_pred_categorical_accuracy: 0.9601 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999519949324
+Epoch 63/70
+224406/224406 - 542s - loss: 0.0230 - x_pred_loss: 0.0176 - z_mean_log_var_loss: 0.0053 - x_pred_categorical_accuracy: 0.9943 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7546 - val_x_pred_loss: 0.7495 - val_z_mean_log_var_loss: 0.0052 - val_x_pred_categorical_accuracy: 0.9535 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999711923445
+Epoch 64/70
+224406/224406 - 543s - loss: 0.0229 - x_pred_loss: 0.0176 - z_mean_log_var_loss: 0.0054 - x_pred_categorical_accuracy: 0.9943 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7277 - val_x_pred_loss: 0.7224 - val_z_mean_log_var_loss: 0.0053 - val_x_pred_categorical_accuracy: 0.9552 - val_x_pred_vae_anneal_metric: 1.0000 - 543s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999827126375
+Epoch 65/70
+224406/224406 - 542s - loss: 0.0222 - x_pred_loss: 0.0170 - z_mean_log_var_loss: 0.0053 - x_pred_categorical_accuracy: 0.9945 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.5352 - val_x_pred_loss: 0.5302 - val_z_mean_log_var_loss: 0.0050 - val_x_pred_categorical_accuracy: 0.9671 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999896259207
+Epoch 66/70
+224406/224406 - 542s - loss: 0.0222 - x_pred_loss: 0.0170 - z_mean_log_var_loss: 0.0053 - x_pred_categorical_accuracy: 0.9945 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.8650 - val_x_pred_loss: 0.8598 - val_z_mean_log_var_loss: 0.0052 - val_x_pred_categorical_accuracy: 0.9467 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999937745552
+Epoch 67/70
+224406/224406 - 542s - loss: 0.0221 - x_pred_loss: 0.0168 - z_mean_log_var_loss: 0.0053 - x_pred_categorical_accuracy: 0.9945 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7236 - val_x_pred_loss: 0.7187 - val_z_mean_log_var_loss: 0.0049 - val_x_pred_categorical_accuracy: 0.9554 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999962641346
+Epoch 68/70
+224406/224406 - 542s - loss: 0.0216 - x_pred_loss: 0.0165 - z_mean_log_var_loss: 0.0052 - x_pred_categorical_accuracy: 0.9946 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.9033 - val_x_pred_loss: 0.8981 - val_z_mean_log_var_loss: 0.0052 - val_x_pred_categorical_accuracy: 0.9443 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999977581218
+Epoch 69/70
+224406/224406 - 541s - loss: 0.0212 - x_pred_loss: 0.0161 - z_mean_log_var_loss: 0.0051 - x_pred_categorical_accuracy: 0.9947 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.8475 - val_x_pred_loss: 0.8426 - val_z_mean_log_var_loss: 0.0049 - val_x_pred_categorical_accuracy: 0.9477 - val_x_pred_vae_anneal_metric: 1.0000 - 541s/epoch - 2ms/sample
+Current vae annealer weight is 0.9999999986546575
+Epoch 70/70
+224406/224406 - 542s - loss: 0.0214 - x_pred_loss: 0.0162 - z_mean_log_var_loss: 0.0052 - x_pred_categorical_accuracy: 0.9947 - x_pred_vae_anneal_metric: 1.0000 - val_loss: 0.7174 - val_x_pred_loss: 0.7122 - val_z_mean_log_var_loss: 0.0052 - val_x_pred_categorical_accuracy: 0.9558 - val_x_pred_vae_anneal_metric: 1.0000 - 542s/epoch - 2ms/sample
+/home/jp2658/.conda/envs/chemvae_tf2/lib/python3.10/site-packages/keras/src/engine/training.py:3103: UserWarning: You are saving your model as an HDF5 file via `model.save()`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')`.
+  saving_api.save_model(
+time of run :  37984.362631082535
+**FINISHED**

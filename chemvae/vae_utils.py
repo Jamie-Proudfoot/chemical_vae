@@ -6,7 +6,7 @@ from .models import load_encoder, load_decoder, load_property_predictor
 import numpy as np
 import pandas as pd
 import os
-from .mol_utils import fast_verify
+from .mol_utils import fast_verify, balanced_parentheses
 
 
 class VAEUtils(object):
@@ -15,6 +15,8 @@ class VAEUtils(object):
                  encoder_file=None,
                  decoder_file=None,
                  directory=None):
+        
+        self.directory = directory
         # files
         if directory is not None:
             curdir = os.getcwd()
@@ -98,19 +100,19 @@ class VAEUtils(object):
         return np.linalg.norm(z0 - z_rep, axis=1)
 
     def prep_mol_df(self, smiles, z):
-        df = pd.DataFrame({'smiles': smiles, "z": z})
-        print(df.head())
+        df = pd.DataFrame({'smiles': smiles, "z": [z]*len(smiles)})
+        # print(df.head())
         sort_df = pd.DataFrame(df[['smiles']].groupby(
             by='smiles').size().rename('count').reset_index())
         df = df.merge(sort_df, on='smiles')
         df.drop_duplicates(subset='smiles', inplace=True)
-        df = df[df['smiles'].apply(fast_verify)]
+        df = df[df['smiles'].apply(balanced_parentheses)]
         if len(df) > 0:
             df['mol'] = df['smiles'].apply(mu.smiles_to_mol)
         if len(df) > 0:
             df = df[pd.notnull(df['mol'])]
         if len(df) > 0:
-            df['distance'] = self.smiles_distance_z(df['smiles'], z)
+            df['distance'] = self.smiles_distance_z(df['smiles'].tolist(), z)
             df['frequency'] = df['count'] / float(sum(df['count']))
             df = df[['smiles', 'distance', 'count', 'frequency', 'mol', "z"]]
             df.sort_values(by='distance', inplace=True)
@@ -146,24 +148,24 @@ class VAEUtils(object):
         if not self.params['do_tgru']:
             def decode(z, standardized=standardized):
                 if standardized:
-                    return self.dec.predict(self.unstandardize_z(z))
+                    return self.dec.predict(self.unstandardize_z(z), verbose=0)
                 else:
-                    return self.dec.predict(z)
+                    return self.dec.predict(z, verbose=0)
         else:
             def decode(z, standardize=standardized):
                 fake_shape = (z.shape[0], self.params[
                     'MAX_LEN'], self.params['NCHARS'])
                 fake_in = np.zeros(fake_shape)
                 if standardize:
-                    return self.dec.predict([self.unstandardize_z(z), fake_in])
+                    return self.dec.predict([self.unstandardize_z(z), fake_in], verbose=0)
                 else:
-                    return self.dec.predict([z, fake_in])
+                    return self.dec.predict([z, fake_in], verbose=0)
 
         def encode(X, standardize=standardized):
             if standardize:
-                return self.standardize_z(self.enc.predict(X)[0])
+                return self.standardize_z(self.enc.predict(X, verbose=0)[0])
             else:
-                return self.enc.predict(X)[0]
+                return self.enc.predict(X, verbose=0)[0]
 
         return encode, decode
 
@@ -177,7 +179,7 @@ class VAEUtils(object):
         if (('reg_prop_tasks' in self.params) and (len(self.params['reg_prop_tasks']) > 0) and
                 ('logit_prop_tasks' in self.params) and (len(self.params['logit_prop_tasks']) > 0)):
 
-            reg_pred, logit_pred = self.property_predictor.predict(z)
+            reg_pred, logit_pred = self.property_predictor.predict(z, verbose=0)
             if 'data_normalization_out' in self.params:
                 df_norm = pd.read_csv(self.params['data_normalization_out'])
                 reg_pred = reg_pred * \
@@ -185,7 +187,7 @@ class VAEUtils(object):
             return reg_pred, logit_pred
         # regression only scenario
         elif ('reg_prop_tasks' in self.params) and (len(self.params['reg_prop_tasks']) > 0):
-            reg_pred = self.property_predictor.predict(z)
+            reg_pred = self.property_predictor.predict(z, verbose=0)
             if 'data_normalization_out' in self.params:
                 df_norm = pd.read_csv(self.params['data_normalization_out'])
                 reg_pred = reg_pred * \
@@ -193,7 +195,7 @@ class VAEUtils(object):
             return reg_pred
         # logit only scenario
         else:
-            logit_pred = self.property_predictor.predict(self.encode(z))
+            logit_pred = self.property_predictor.predict(self.encode(z), verbose=0)
             return logit_pred
 
     # wrapper functions
@@ -204,7 +206,7 @@ class VAEUtils(object):
             if (('reg_prop_tasks' in self.params) and (len(self.params['reg_prop_tasks']) > 0) and
                     ('logit_prop_tasks' in self.params) and (len(self.params['logit_prop_tasks']) > 0)):
                 reg_pred, logit_pred = self.property_predictor.predict(
-                    self.encode(X))
+                    self.encode(X), verbose=0)
                 if 'data_normalization_out' in self.params:
                     df_norm = pd.read_csv(
                         self.params['data_normalization_out'])
@@ -213,7 +215,7 @@ class VAEUtils(object):
                 return reg_pred, logit_pred
             # regression only scenario
             elif ('reg_prop_tasks' in self.params) and (len(self.params['reg_prop_tasks']) > 0):
-                reg_pred = self.property_predictor.predict(self.encode(X))
+                reg_pred = self.property_predictor.predict(self.encode(X), verbose=0)
                 if 'data_normalization_out' in self.params:
                     df_norm = pd.read_csv(
                         self.params['data_normalization_out'])
@@ -223,7 +225,7 @@ class VAEUtils(object):
 
             # logit only scenario
             else:
-                logit_pred = self.property_predictor.predict(self.encode(X))
+                logit_pred = self.property_predictor.predict(self.encode(X), verbose=0)
                 return logit_pred
 
         return predict_prop

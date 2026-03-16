@@ -61,9 +61,14 @@ self.implementation ==1 : mem
 self.implementation ==0 : cpu
 
 '''
-from keras.layers.recurrent import GRU
+import tensorflow.compat.v1 as tf
+# tf.disable_v2_behavior()
+from keras.layers import GRU
+# from tensorflow.compat.v1.keras.layers import GRU
 from keras import backend as K
-from keras.engine import InputSpec
+# from tensorflow.compat.v1.keras import backend as K
+from keras.layers import InputSpec
+# from tensorflow.compat.v1.keras.layers import InputSpec
 import numpy as np
 
 if K.backend() == 'tensorflow':
@@ -83,13 +88,13 @@ class TerminalGRU(GRU):
         # @param: temperature - sampling temperature
         # Annealing will be handled in the callbacks
         super(TerminalGRU, self).__init__(units, **kwargs)
-        self.units = units
+        # self.units = units
         self.temperature = temperature
         self.rnd_seed = rnd_seed
         self.uses_learning_phase = True
         self.supports_masking = False
-        self.units = units
-        self.recurrent_dropout = min(1., max(0., recurrent_dropout))
+        # self.units = units
+        # self.recurrent_dropout = min(1., max(0., recurrent_dropout))
         self.input_spec = [InputSpec(ndim=3),
                            InputSpec(ndim=3)]
 
@@ -108,7 +113,7 @@ class TerminalGRU(GRU):
         if self.stateful:
             self.reset_states()
 
-        self.kernel = self.add_weight((self.input_dim, self.units * 3),
+        self.kernel = self.add_weight(shape=(self.input_dim, self.units * 3),
                                       name='kernel',
                                       initializer=self.kernel_initializer,
                                       regularizer=self.kernel_regularizer,
@@ -118,14 +123,14 @@ class TerminalGRU(GRU):
         # this last recurrent weight applied to true sequence input from prev. timestep,
         #   or sampled output from prev. time step.
         self.recurrent_kernel = self.add_weight(
-            (self.units, self.units * 4),
+            shape=(self.units, self.units * 4),
             name='recurrent_kernel',
             initializer=self.recurrent_initializer,
             regularizer=self.recurrent_regularizer,
             constraint=self.recurrent_constraint)
 
         if self.use_bias:
-            self.bias = self.add_weight((self.units * 4,),
+            self.bias = self.add_weight(shape=(self.units * 4,),
                                         name='bias',
                                         initializer='zero',
                                         regularizer=self.bias_regularizer,
@@ -187,12 +192,31 @@ class TerminalGRU(GRU):
             constants.append([K.cast_to_floatx(1.) for _ in range(3)])
         return constants
 
-    def call(self, inputs, mask=None):
-        if type(inputs) is not list or len(inputs) != 2:
-            raise Exception('terminal gru runs on list of length 2')
+    def preprocess_input(self, inputs):
+        """Apply input->gate dense projection across timesteps.
 
-        X = inputs[0]
-        true_seq = inputs[1]
+        inputs: (batch, timesteps, input_dim)
+        returns: (batch, timesteps, 3*units)
+        """
+        # matmul over the last axis: equivalent to TensorFlow's einsum or tensordot
+        x = tf.tensordot(inputs, self.kernel, axes=[[2], [0]])
+        # add bias corresponding to kernel portion if present (first 3*units)
+        if self.bias is not None:
+            bias_x = self.bias[:self.units * 3]
+            x = x + tf.reshape(bias_x, (1, 1, -1))
+        return x
+
+    def call(self, inputs, mask=None, training=None, initial_state=None):
+        # if type(inputs) is not list or len(inputs) != 2:
+        #     raise Exception('terminal gru runs on list of length 2')
+        if initial_state is not None and isinstance(initial_state, list) and len(initial_state) > 0:
+            X = inputs
+            true_seq = initial_state[0]
+        elif type(inputs) is list and len(inputs) == 2:
+            X = inputs[0]
+            true_seq = inputs[1]
+        else:
+            raise Exception('terminal gru runs on list of length 2')
 
         if self.stateful:
             initial_states = self.states
@@ -265,9 +289,15 @@ class TerminalGRU(GRU):
     def get_config(self):
         config = {'units': self.units,
                   'temperature': self.temperature,
-                  'rnd_seed': self.rnd_seed}
+                  'rnd_seed': self.rnd_seed,
+                  'implementation': self.implementation,
+                  'stateful': self.stateful}
         base_config = super(TerminalGRU, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
+
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
 
     def output_sampling(self, output, rand_matrix):
         # Generates a sampled selection based on raw output state vector
@@ -332,12 +362,12 @@ class TerminalGRU(GRU):
             # this should correspond  to true input
             prev_sampled_output = true_input
 
-            if self.implementation == 0:
+            if self.implementation == 0: #in [0,1]: #== 0:
                 x_z = prev_layer_input[0, :, :self.units]
                 x_r = prev_layer_input[0, :, self.units: 2 * self.units]
                 x_h = prev_layer_input[0, :, 2 * self.units:]
             else:
-                raise ValueError('Implementation type ' + self.implementation + ' is invalid')
+                raise ValueError('Implementation type ' + str(self.implementation) + ' is invalid')
 
             z = self.recurrent_activation(x_z + K.dot(h_tm1 * rec_dp_mask[0],
                                                       self.recurrent_kernel_z))
@@ -365,7 +395,7 @@ class TerminalGRU(GRU):
 
             prev_layer_input = h[0:1, :, :]
 
-            if self.implementation == 0:
+            if self.implementation == 0: #in [0,1]: #== 0:
                 x_z = prev_layer_input[0, :, :self.units]
                 x_r = prev_layer_input[0, :, self.units: 2 * self.units]
                 x_h = prev_layer_input[0, :, 2 * self.units:]
@@ -383,6 +413,8 @@ class TerminalGRU(GRU):
             output = z * h_tm1 + (1. - z) * hh
 
             final_output = self.output_sampling(output, random_cutoff_vec)
+            # clip to prevent numerical instability causing nan values in loss function
+            final_output = tf.clip_by_value(final_output, tf.keras.backend.epsilon(), 1.0-tf.keras.backend.epsilon())
 
             return K.stack([output, final_output])
 

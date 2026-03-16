@@ -1,9 +1,17 @@
-"""
+"""set_verbosity
 
 This version of autoencoder is able to save weights and load weights for the
 encoder and decoder portions of the network
 
 """
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_DETERMINISTIC_OPS'] = '1' 
+
+import tensorflow.compat.v1 as tf
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+tf.disable_v2_behavior()
 
 # from gpu_utils import pick_gpu_lowest_memory
 # gpu_free_number = str(pick_gpu_lowest_memory())
@@ -13,26 +21,33 @@ encoder and decoder portions of the network
 
 import argparse
 import numpy as np
-import tensorflow as tf
-config = tf.ConfigProto()
+# import tensorflow as tf
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.5
 config.gpu_options.allow_growth = True
 import yaml
 import time
-import os
+import os, random
 from keras import backend as K
+# from tensorflow.compat.v1.keras import backend as K
+# tf.compat.v1.disable_eager_execution()
+# tf.compat.v1.enable_eager_execution()
 from keras.models import Model
-from keras.optimizers import SGD, Adam, RMSprop
+# from tensorflow.compat.v1.keras.models import Model
+# from keras.optimizers import SGD, Adam, RMSprop
+from tensorflow.compat.v1.keras.optimizers import SGD, Adam, RMSprop
 from . import hyperparameters
 from . import mol_utils as mu
 from . import mol_callbacks as mol_cb
 from keras.callbacks import CSVLogger
+# from tensorflow.compat.v1.keras.callbacks import CSVLogger
 from .models import encoder_model, load_encoder
 from .models import decoder_model, load_decoder
 from .models import property_predictor_model, load_property_predictor
 from .models import variational_layers
 from functools import partial
 from keras.layers import Lambda
+# from tensorflow.compat.v1.keras.layers import Lambda
 
 
 
@@ -148,7 +163,7 @@ def vectorize_data(params):
 def load_models(params):
 
     def identity(x):
-        return K.identity(x)
+        return tf.identity(x)
 
     # def K_params with kl_loss_var
     kl_loss_var = K.variable(params['kl_loss_weight'])
@@ -215,7 +230,7 @@ def load_models(params):
 
 def kl_loss(truth_dummy, x_mean_log_var_output):
     x_mean, x_log_var = tf.split(x_mean_log_var_output, 2, axis=1)
-    print('x_mean shape in kl_loss: ', x_mean.get_shape())
+    # print('x_mean shape in kl_loss: ', x_mean.get_shape())
     kl_loss = - 0.5 * \
         K.mean(1 + x_log_var - K.square(x_mean) -
               K.exp(x_log_var), axis=-1)
@@ -230,11 +245,11 @@ def main_no_prop(params):
 
     # compile models
     if params['optim'] == 'adam':
-        optim = Adam(lr=params['lr'], beta_1=params['momentum'])
+        optim = Adam(learning_rate=params['lr'], beta_1=params['momentum'])
     elif params['optim'] == 'rmsprop':
-        optim = RMSprop(lr=params['lr'], rho=params['momentum'])
+        optim = RMSprop(learning_rate=params['lr'], rho=params['momentum'])
     elif params['optim'] == 'sgd':
-        optim = SGD(lr=params['lr'], momentum=params['momentum'])
+        optim = SGD(learning_rate=params['lr'], momentum=params['momentum'])
     else:
         raise NotImplemented("Please define valid optimizer")
 
@@ -278,8 +293,8 @@ def main_no_prop(params):
                     validation_data=[ X_test, model_test_targets]
                     )
 
-    encoder.save(params['encoder_weights_file'])
-    decoder.save(params['decoder_weights_file'])
+    encoder.save(params['encoder_weights_file'], save_format='h5', include_optimizer=True)
+    decoder.save(params['decoder_weights_file'], save_format='h5', include_optimizer=True)
     print('time of run : ', time.time() - start_time)
     print('**FINISHED**')
     return
@@ -295,11 +310,11 @@ def main_property_run(params):
 
     # compile models
     if params['optim'] == 'adam':
-        optim = Adam(lr=params['lr'], beta_1=params['momentum'])
+        optim = Adam(learning_rate=params['lr'], beta_1=params['momentum'])
     elif params['optim'] == 'rmsprop':
-        optim = RMSprop(lr=params['lr'], rho=params['momentum'])
+        optim = RMSprop(learning_rate=params['lr'], rho=params['momentum'])
     elif params['optim'] == 'sgd':
-        optim = SGD(lr=params['lr'], momentum=params['momentum'])
+        optim = SGD(learning_rate=params['lr'], momentum=params['momentum'])
     else:
         raise NotImplemented("Please define valid optimizer")
 
@@ -352,7 +367,7 @@ def main_property_run(params):
 
     if 'checkpoint_path' in params.keys():
         callbacks.append(mol_cb.EncoderDecoderCheckpoint(encoder, decoder,
-                params=params, prop_pred_model = property_predictor,save_best_only=False))
+                params=params, prop_pred_model = property_predictor, save_best_only=False))
 
     AE_PP_model.compile(loss=model_losses,
                loss_weights=model_loss_weights,
@@ -370,9 +385,9 @@ def main_property_run(params):
          validation_data=[X_test, model_test_targets]
      )
 
-    encoder.save(params['encoder_weights_file'])
-    decoder.save(params['decoder_weights_file'])
-    property_predictor.save(params['prop_pred_weights_file'])
+    encoder.save(params['encoder_weights_file'], save_format='h5', include_optimizer=True)
+    decoder.save(params['decoder_weights_file'], save_format='h5', include_optimizer=True)
+    property_predictor.save(params['prop_pred_weights_file'], save_format='h5', include_optimizer=True)
 
     print('time of run : ', time.time() - start_time)
     print('**FINISHED**')
@@ -392,6 +407,10 @@ if __name__ == "__main__":
 
     params = hyperparameters.load_params(args['exp_file'])
     print("All params:", params)
+
+    tf.random.set_random_seed(params['RAND_SEED'])
+    np.random.seed(params['RAND_SEED'])
+    random.seed(params['RAND_SEED'])
 
     if params['do_prop_pred'] :
         main_property_run(params)

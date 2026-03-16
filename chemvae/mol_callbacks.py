@@ -1,7 +1,9 @@
+import tensorflow.compat.v1 as tf
 from keras.callbacks import Callback, ModelCheckpoint
 import numpy as np
 import pandas as pd
 from keras import backend as K
+# import tensorflow.keras.backend as K
 import os
 
 
@@ -108,6 +110,9 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
         self.encoder = encoder_model
         self.decoder = decoder_model
         self.prop_pred_model = prop_pred_model
+        self.save_freq = "epoch"
+        self.load_weights_on_restart = True
+        self.filepath = params.get("checkpoint_path", None)
 
     def on_epoch_end(self, epoch, logs=None):
         logs = logs or {}
@@ -123,10 +128,10 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
                           ' saving model'
                           % (epoch, self.monitor, self.best, current))
                 self.best = current
-                self.encoder.save(os.path.join(self.p['checkpoint_path'], 'encoder_{}.h5'.format(epoch)))
-                self.decoder.save(os.path.join(self.p['checkpoint_path'], 'decoder_{}.h5'.format(epoch)))
+                self.encoder.save(os.path.join(self.p['checkpoint_path'], 'encoder_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)
+                self.decoder.save(os.path.join(self.p['checkpoint_path'], 'decoder_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)
                 if self.prop_pred_model is not None:
-                    self.prop_pred_model.save(os.path.join(self.p['checkpoint_path'], 'prop_pred_{}.h5'.format(epoch)))
+                    self.prop_pred_model.save(os.path.join(self.p['checkpoint_path'], 'prop_pred_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)
             else:
                 if self.verbose > 0:
                     print('Epoch %05d: %s did not improve' %
@@ -134,7 +139,7 @@ class EncoderDecoderCheckpoint(ModelCheckpoint):
         else:
             if self.verbose > 0:
                 print('Epoch %05d: saving model to ' % (epoch))
-            self.encoder.save(os.path.join(self.p['checkpoint_path'], 'encoder_{}.h5'.format(epoch)))
-            self.decoder.save(os.path.join(self.p['checkpoint_path'], 'decoder_{}.h5'.format(epoch)))
+            self.encoder.save(os.path.join(self.p['checkpoint_path'], 'encoder_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)
+            self.decoder.save(os.path.join(self.p['checkpoint_path'], 'decoder_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)
             if self.prop_pred_model is not None:
-                self.prop_pred_model.save(os.path.join(self.p['checkpoint_path'], 'prop_pred_{}.h5'.format(epoch)))
+                self.prop_pred_model.save(os.path.join(self.p['checkpoint_path'], 'prop_pred_{}.h5'.format(epoch)), save_format='h5', include_optimizer=True)

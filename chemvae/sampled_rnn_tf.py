@@ -60,13 +60,15 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
    """
     import numpy as np
     np.random.seed(random_seed)
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
+    # tf.disable_v2_behavior()
     tf.set_random_seed(random_seed)
     from tensorflow.python.ops import tensor_array_ops
     from tensorflow.python.ops import control_flow_ops
     from tensorflow.python.framework import constant_op
     from tensorflow.python.framework import dtypes
-    import keras.backend as K
+    from keras import backend as K
+    # from tensorflow.compat.v1.keras import backend as K
 
     ndim = len(inputs.get_shape())
     if ndim < 3:
@@ -142,7 +144,7 @@ def sampled_rnn(step_function, inputs, initial_states, units, random_seed,
         output_ta_t = output_ta_t.write(time, output)
         return (time + 1, output_ta_t) + tuple(new_states)
 
-    final_outputs = control_flow_ops.while_loop(
+    final_outputs = tf.while_loop(
         cond=lambda time, *_: time < time_steps,
         body=_step,
         loop_vars=(time, output_ta) + states,
