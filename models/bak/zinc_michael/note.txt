@@ -1,7 +1,0 @@
-To run chemvae training:
-(1st activate chemvae environment)
-Then cd to chemical_vae/models/<mymodel>:
-
-nohup python -m chemvae.train_vae > train_vae.out &
-
-(make sure that the GPU is not being used by someone else first: nvidia-smi)
