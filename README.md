@@ -86,6 +86,10 @@ train_vae.py : main script for training variational autoencoder
   - Includes Weight_Annealer callback, which is used to update the weight of the KL loss component
 - **vae_utils.py** - utility functions for an autoencoder object, used post processing.
 
+`models/` : main working directory for creating and training models
+
+`notebooks/` : main directory for analysing results and performing model inference using Jupyter notebooks
+
 ## Original Authors:
 This software was originally written by Jennifer Wei, Benjamin Sanchez-Lengeling, Dennis Sheberla, Rafael Gomez-Bomberelli, and Alan Aspuru-Guzik (alan@aspuru.com). 
 It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by
