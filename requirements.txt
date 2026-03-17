@@ -1,13 +1,13 @@
-numpy==1.19.5
-ipykernel==5.5.6
-rdkit-pypi==2021.9.4
-pandas==1.1.5
-matplotlib==3.3.4
-tensorflow-gpu==2.15.0
+tensorflow==2.15.0
 keras==2.15.0
-h5py==2.10.0
-seaborn==0.11.2
-pubchempy==1.0.4
-tqdm==4.64.1
-
-# python 3.6
+numpy>=1.23,<1.26
+pandas>=1.3,<2.1
+matplotlib>=3.5
+seaborn>=0.11
+h5py>=3.8
+ipykernel
+rdkit-pypi
+pubchempy
+tqdm
+pyaml
+scikit-learn
