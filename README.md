@@ -107,6 +107,6 @@ It is based on the work published in https://arxiv.org/pdf/1610.02415.pdf by
 
 ## Subsequent Authors:
 
-* [Sven Lüpke](https://github.com/sven-luepke) (developed a fork of the original repository and produced the template Jupyter notebooks for the resuts)
+* [Sven Lüpke](https://github.com/sven-luepke) (developed a fork of the original repository and produced the template Jupyter notebooks for the results)
 * [Jamie Proudfoot](https://github.com/Jamie-Proudfoot) (updated the chemvae code to work in Tensorflow 2 allowing it to be used on more modern GPUs)
 
